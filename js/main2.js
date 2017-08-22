@@ -84,38 +84,40 @@ window.onload = function() {
         for (var i = 0; i < validLocationArray.length; i++) {
           if(orientation==0) {
             newLocation = validLocationArray[i].toString() + b.toString();
-            ships[shipNumber].locations.push(newLocation);
-            // tempShipLocationArray.push(newLocation);
+            // ships[shipNumber].locations.push(newLocation);
+            tempShipLocationArray.push(newLocation);
           } else {
             newLocation = a.toString() + validLocationArray[i].toString();
-            ships[shipNumber].locations.push(newLocation);
-            // tempShipLocationArray.push(newLocation);
+            // ships[shipNumber].locations.push(newLocation);
+            tempShipLocationArray.push(newLocation);
           }
         }
           // takenSpots.push(newLocation);
           // console.log(takenSpots);
 
-        //   isOverlapping = checkOverlap(tempShipLocationArray, takenSpots);
-        //   console.log("Is Overlapping?", isOverlapping);
-        //   if(isOverlapping === true) {
-        //     tempShipLocationArray = [];
-        //     generateShipPositionParameters(shipNumber);
-        //     console.log("isOverlapping = True");
-        //   } else {
-        //     console.log("isOverlapping = False");
-        //     takenSpots.concat(tempShipLocationArray);
-        //     ships[shipNumber].locations.concat(tempShipLocationArray);
-        //     tempShipLocationArray = [];
-        //   }
-        //
-        // }
+          console.log("variables for overlap", tempShipLocationArray, takenSpots);
+          isOverlapping = checkOverlap(tempShipLocationArray, takenSpots);
+          console.log("Is Overlapping?", isOverlapping);
+          if(isOverlapping === true) {
+            tempShipLocationArray = [];
+            generateShipPositionParameters(shipNumber);
+            console.log("isOverlapping = True");
+          } else {
+            console.log("isOverlapping = False");
+            takenSpots = takenSpots.concat(tempShipLocationArray);
+            console.log(tempShipLocationArray);
+            console.log(takenSpots);
+            ships[shipNumber].locations = ships[shipNumber].locations.concat(tempShipLocationArray);
+            // tempShipLocationArray = [];
+          }
+
 
         // console.log(ships[shipNumber].name + " locations", ships[shipNumber].locations);
 
         for(var q = 0; q < ships[shipNumber].locations.length; q++) {
           // console.log($(ships[shipNumber].locations)[q]);
           var eachLocation = $(ships[shipNumber].locations)[q];
-          $("#"+ eachLocation).addClass('spaceWasHit');
+          $("#"+ eachLocation).addClass('ship');
         }
         console.log("takenSpots", takenSpots);
       // }
@@ -143,4 +145,10 @@ window.onload = function() {
     generateShipPositionParameters(i);
   }
   console.log("ships", ships);
+
+  $("td").click(function() {
+    alert($(this).attr("id"));
+    $(this).off();
+    $(this).addClass('spaceWasHit');
+  });
 }

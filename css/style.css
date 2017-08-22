@@ -15,6 +15,10 @@ td:hover {
   background-color:#bada55;
 }
 
-.spaceWasHit {
+.ship {
   background-color:black;
+}
+
+.spaceWasHit {
+  background-color:red;
 }
