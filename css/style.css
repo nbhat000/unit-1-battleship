@@ -1,12 +1,15 @@
+h1 {
+  text-align:center;
+}
+
 table {
     width: 75%;
     border-collapse: collapse;
+    margin:0 auto;
 }
 td {
-    width:50px;
-    padding-bottom:100px;
-    /*width: 14.29%;
-    padding-bottom: 14.29%;*/
+    width: 14.29%;
+    padding-bottom: 14.29%;
     box-shadow: inset 0 0 2px 2px #fff;
     background-color: blue;
 }
@@ -21,4 +24,8 @@ td:hover {
 
 .spaceWasHit {
   background-color:red;
+}
+
+.spaceWasMiss {
+  background-color:darkblue;
 }

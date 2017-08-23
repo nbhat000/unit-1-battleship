@@ -147,8 +147,14 @@ window.onload = function() {
   console.log("ships", ships);
 
   $("td").click(function() {
-    alert($(this).attr("id"));
+    // alert($(this).attr("id"));
     $(this).off();
-    $(this).addClass('spaceWasHit');
-  });
+    if (takenSpots.includes($(this).attr("id"))) {
+      $(this).addClass('spaceWasHit');
+      console.log("Hit!");
+    } else {
+      console.log("Missed!");
+      $(this).addClass('spaceWasMiss');
+    }
+  })
 }
