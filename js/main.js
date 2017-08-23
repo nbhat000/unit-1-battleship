@@ -1,23 +1,21 @@
-// USE SWEET-ALERT.JS FOR YOUR WIN/LOSE SCRIPTS
-
 window.onload = function() {
-  console.log("JS Loaded");
-
-  $("td").click(function() {
-    console.log($(this).attr("id"));
-    $(this).addClass('spaceWasHit');
-  });
-
-  var isBoardPositionValid;
-  var boardId;
-  var orientation;
-  var direction;
-  var newLocation;
+  var a = 0;
+  var b = 0;
+  var orientation = 0;
+  var direction = 0;
+  var takenSpots = [];
+  var numberOfSunkShips = 0;
+  var numberOfMisses = 0;
   var ships = [
-    {"name": "Battleship", "length":4, "numberOfHits":0, "locations": []},
-    {"name": "Frigate", "length":3, "numberOfHits":0, "locations": []},
-    {"name": "Minesweeper", "length":2, "numberOfHits":0, "locations": []}
+    {"name": "Battleship", "shipLength":4, "numberOfHits":0, "locations": []},
+    {"name": "Frigate", "shipLength":3, "numberOfHits":0, "locations": []},
+    {"name": "Minesweeper", "shipLength":2, "numberOfHits":0, "locations": []}
   ];
+
+  for (var i = 0; i < ships.length; i++) {
+    generateShipPositionParameters(i);
+  }
+  console.log("ships", ships);
 
   // Generate random integer between min and max inclusive
   function randomIntFromInterval(min,max)
@@ -26,78 +24,204 @@ window.onload = function() {
   }
 
 
-
-  function generateShipPositionParameters() {
-    boardId = randomIntFromInterval(0,6).toString() + randomIntFromInterval(0,6).toString();
+  function generateShipPositionParameters(shipNumber) {
+    console.log('******************************');
+    // console.log("generateShipPositionParameters");
+    a = randomIntFromInterval(0,6);
+    b = randomIntFromInterval(0,6);
     orientation = randomIntFromInterval(0,1);
     direction = randomIntFromInterval(0,1);
+    //if orientation = 0, ship is vertical
+    //if orientation = 1, ship is horizontal
+    //if direction = 0, decrement
+    //if direction = 1, increment
+    evaluateCoords(a, b, orientation, direction, shipNumber);
+  }
+
+  function evaluateCoords(a, b, orientation, direction, shipNumber) {
+
+    var validityTestArray = [];
+    // for (let i = 0; i < 1; i++) {
+      // console.log("shipLength", ships[i].shipLength, i);
+      // console.log(i);
+      // console.log(ships[shipNumber]);
+      for (let x = 0; x < ships[shipNumber].shipLength; x++) {
+        if (orientation == 0) {
+          if(direction == 0) {
+              validityTestArray.push(a--);
+          } else {
+              validityTestArray.push(a++);
+          }
+        } else {
+          if(direction == 0) {
+              validityTestArray.push(b--);
+          } else {
+              validityTestArray.push(b++);
+          }
+        }
+      };
+      // console.log("validityTestArray", validityTestArray);
+
+
+      if (validityTestArray.includes(-1) || validityTestArray.includes(7)) {
+        console.log("Impossible ship!");
+        validityTestArray=[];
+        generateShipPositionParameters(shipNumber);
+      } else {
+        // console.log("YAY BOAT");
+        generateShipLocations(validityTestArray, shipNumber);
+      }
+
+    // };
   }
 
 
-  for (var i = 0; i < ships.length; i++) {
-    generateShipPositionParameters();
-    var validPosition = checkBoardPositionValidity(ships[i].length, direction, orientation);
-    while(validPosition===false) {
-      generateShipPositionParameters();
-      validPosition = checkBoardPositionValidity(ships[i].length, direction, orientation);
-    }
-    ships[i].locations.push(boardId);
-    for (var i = 0; i < ships[i].length - 1; i++) {
-      if (direction===0) {
-        if (orientation===0) {
-          newLocation = parseInt(boardId[orientation]--) + boardId[1];
-        } else {
-          newLocation = boardId[0] + parseInt(boardId[orientation]--);
+  function generateShipLocations(validLocationArray, shipNumber) {
+    var newLocation = "";
+    var tempShipLocationArray = [];
+    var isOverlapping;
+    // for (var x = 0; x < ships.length; x++) {
+    // if (Object.values(ships).indexOf(ships[x].locations) > -1) {
+    //   console.log('has test1');
+    // }
+      // if() {
+      //   console.log("Entered if");
+        // generateShipPositionParameters(shipNumber);
+      // } else {
+        for (var i = 0; i < validLocationArray.length; i++) {
+          if(orientation==0) {
+            newLocation = validLocationArray[i].toString() + b.toString();
+            // ships[shipNumber].locations.push(newLocation);
+            tempShipLocationArray.push(newLocation);
+          } else {
+            newLocation = a.toString() + validLocationArray[i].toString();
+            // ships[shipNumber].locations.push(newLocation);
+            tempShipLocationArray.push(newLocation);
+          }
         }
-      } else {
-        if (orientation===0) {
-          newLocation = parseInt(boardId[orientation]++) + boardId[1];
-        } else {
-          newLocation = boardId[0] + parseInt(boardId[orientation]++);
+          // takenSpots.push(newLocation);
+          // console.log(takenSpots);
+
+          console.log("variables for overlap", tempShipLocationArray, takenSpots);
+          isOverlapping = checkOverlap(tempShipLocationArray, takenSpots);
+          console.log("Is Overlapping?", isOverlapping);
+          if(isOverlapping === true) {
+            tempShipLocationArray = [];
+            generateShipPositionParameters(shipNumber);
+            console.log("isOverlapping = True");
+          } else {
+            console.log("isOverlapping = False");
+            takenSpots = takenSpots.concat(tempShipLocationArray);
+            console.log(tempShipLocationArray);
+            console.log(takenSpots);
+            ships[shipNumber].locations = ships[shipNumber].locations.concat(tempShipLocationArray);
+            // tempShipLocationArray = [];
+          }
+
+
+        // console.log(ships[shipNumber].name + " locations", ships[shipNumber].locations);
+
+        for(var q = 0; q < ships[shipNumber].locations.length; q++) {
+          // console.log($(ships[shipNumber].locations)[q]);
+          var eachLocation = $(ships[shipNumber].locations)[q];
+          $("#"+ eachLocation).addClass('ship ship-' + shipNumber);
         }
-      }
-      console.log(newLocation);
+        console.log("takenSpots", takenSpots);
+      // }
+    // }
+    // console.log(ships[shipNumber].name + " object", ships);
+
+
+  }
+
+  function checkOverlap(array1, array2) {
+    return array2.some(function (v) {
+      return array1.indexOf(v) >= 0;
+    });
+  };
+
+  function checkIfOverlap(validLocationArray, shipNumber) {
+    for(var x=0; x < validLocationArray.length; x++) {
+      var shipStuff = ships.filter(function (shipNumber) { return shipNumber.locations.includes(validLocationArray[x]) });
     }
-  // }
-  // Function that checks for validity of boardId with currentShip and returns Boolean
-  function checkBoardPositionValidity(shipLength, direction, orientation) {
-    if(direction===0) {
-      if(parseInt(boardId[orientation]) - shipLength < 0) {
-        return isBoardPositionValid = false;
+    console.log("shipStuff", shipStuff);
+  }
+
+
+
+  function eventListenerAdd() {
+    $("td").click(function() {
+      // remove event listener from table cell if clicked
+      $(this).off();
+
+      if (takenSpots.includes($(this).attr("id"))) {
+        $(this).addClass('spaceWasHit');
+        console.log("Hit!");
+
       } else {
-        return true;
+        console.log("Missed!");
+        $(this).addClass('spaceWasMiss');
       }
-    } else if (direction===1) {
-      if(parseInt(boardId[orientation]) + shipLength > 6) {
-        return isBoardPositionValid = false;
+
+      if ($(this).hasClass("ship")) {
+        var clickedShipNumber = $(this).attr("class");
+        clickedShipNumber = clickedShipNumber.replace(/\D/g,'');
+        ships[clickedShipNumber].numberOfHits++;
+
+        checkShipSunk(clickedShipNumber);
       } else {
-        return true;
+          numberOfMisses++;
+          $("#numberOfMisses").text(numberOfMisses);
+          winOrLose(numberOfSunkShips, numberOfMisses);
+          console.log("numberOfMisses", numberOfMisses);
       }
+    });
+  }
+
+
+
+  function checkShipSunk(shipNumber) {
+    console.log(`numberOfHits ship${shipNumber}: ${ships[shipNumber].numberOfHits}`);
+    if (ships[shipNumber].numberOfHits === ships[shipNumber].shipLength) {
+      alert(ships[shipNumber].name+ " sunk!");
+
+
+      winOrLose(numberOfSunkShips);
+      numberOfSunkShips++;
+      $("#numberOfShipsSunk").text(numberOfSunkShips);
     }
   }
 
-  // console.log("isBoardPositionValid", checkBoardPositionValidity(ships[0].length, direction, orientation));
+  function winOrLose(numberOfSunkShips, numberOfMisses) {
+    if(numberOfSunkShips === ships.length) {
+      alert("You Win!");
+    }
+    if(numberOfMisses > 5) {
+      alert("You Lose!");
+      resetBoard();
+    }
+  }
 
-// PSEUDOCODE:
-// 1. Assign ships randomly to board
-//  -random board id picked first
-//    -generate two random numbers
-//    -concatenate the two
-//  -random orientation picked
-//    - 0 = horizontal
-//    - 1 = vertical
-//  -random directions: 0 or 1 (define whether it increments or decrements)
-//  -create ships object that stores length, # of hits
-//    - if # of hits == length, ship isSunk = true
-//  -picks random id, orientation, direction, then if current id + length is
-//   greater than 6 it reruns the function
+  function resetBoard() {
+    // $('table').children().removeClass();
+    $('tr').children().removeClass();
+    takenSpots = [];
+    console.log($('tr').children());
+    for(var i=0; i < ships.length; i++) {
+      ships[i].locations = [];
+      ships[i].numberOfHits = 0;
+    }
+    for (var x = 0; x < ships.length; x++) {
+      generateShipPositionParameters(x);
+    }
+    $('tr').children().off();
+    eventListenerAdd();
 
-// **********
-// Maybe use pure CSS implementation? Put class called ship and ship# on each
-// place where a ship is placed, then check if that square has class "ship" to
-// see if another ship can be placed there or not
-//
-// This would also be a way you could handle hits on ships... remove ship# class
-// on hit and replace with "hit" class
-}
+    numberOfSunkShips = 0;
+    numberOfMisses = 0;
+    $("#numberOfMisses").text(numberOfMisses);
+    console.log($('tr').children());
+  }
+
+  eventListenerAdd();
 }
