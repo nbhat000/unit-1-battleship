@@ -4,6 +4,8 @@ window.onload = function() {
   var orientation = 0;
   var direction = 0;
   var takenSpots = [];
+  var numberOfSunkShips = 0;
+  var numberOfMisses = 0;
   var ships = [
     {"name": "Battleship", "shipLength":4, "numberOfHits":0, "locations": []},
     {"name": "Frigate", "shipLength":3, "numberOfHits":0, "locations": []},
@@ -117,7 +119,7 @@ window.onload = function() {
         for(var q = 0; q < ships[shipNumber].locations.length; q++) {
           // console.log($(ships[shipNumber].locations)[q]);
           var eachLocation = $(ships[shipNumber].locations)[q];
-          $("#"+ eachLocation).addClass('ship');
+          $("#"+ eachLocation).addClass('ship ship-' + shipNumber);
         }
         console.log("takenSpots", takenSpots);
       // }
@@ -147,14 +149,48 @@ window.onload = function() {
   console.log("ships", ships);
 
   $("td").click(function() {
-    // alert($(this).attr("id"));
+    if ($(this).attr("class")) {
+      var clickedShipNumber = $(this).attr("class");
+      clickedShipNumber = clickedShipNumber.replace(/\D/g,'');
+      ships[clickedShipNumber].numberOfHits++;
+
+      checkShipSunk(clickedShipNumber);
+    } else {
+      numberOfMisses++;
+      winOrLose(numberOfSunkShips, numberOfMisses);
+      console.log("numberOfMisses", numberOfMisses);
+
+    }
+
+    // remove event listener from table cell if clicked
     $(this).off();
+
     if (takenSpots.includes($(this).attr("id"))) {
       $(this).addClass('spaceWasHit');
       console.log("Hit!");
+
     } else {
       console.log("Missed!");
       $(this).addClass('spaceWasMiss');
     }
-  })
+  });
+
+  function checkShipSunk(shipNumber) {
+    console.log(`numberOfHits ship${shipNumber}: ${ships[shipNumber].numberOfHits}`);
+    if (ships[shipNumber].numberOfHits === ships[shipNumber].shipLength) {
+      alert("sunk");
+      numberOfSunkShips++;
+      winOrLose(numberOfSunkShips);
+    }
+  }
+
+  function winOrLose(numberOfSunkShips, numberOfMisses) {
+    if(numberOfSunkShips === ships.length) {
+      alert("You Win!");
+    }
+    if(numberOfMisses > 10) {
+      alert("You Lose!");
+    }
+  }
+
 }
