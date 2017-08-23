@@ -12,6 +12,11 @@ window.onload = function() {
     {"name": "Minesweeper", "shipLength":2, "numberOfHits":0, "locations": []}
   ];
 
+  for (var i = 0; i < ships.length; i++) {
+    generateShipPositionParameters(i);
+  }
+  console.log("ships", ships);
+
   // Generate random integer between min and max inclusive
   function randomIntFromInterval(min,max)
   {
@@ -143,44 +148,47 @@ window.onload = function() {
   }
 
 
-  for (var i = 0; i < ships.length; i++) {
-    generateShipPositionParameters(i);
+
+  function eventListenerAdd() {
+    $("td").click(function() {
+      // remove event listener from table cell if clicked
+      $(this).off();
+
+      if (takenSpots.includes($(this).attr("id"))) {
+        $(this).addClass('spaceWasHit');
+        console.log("Hit!");
+
+      } else {
+        console.log("Missed!");
+        $(this).addClass('spaceWasMiss');
+      }
+
+      if ($(this).hasClass("ship")) {
+        var clickedShipNumber = $(this).attr("class");
+        clickedShipNumber = clickedShipNumber.replace(/\D/g,'');
+        ships[clickedShipNumber].numberOfHits++;
+
+        checkShipSunk(clickedShipNumber);
+      } else {
+          numberOfMisses++;
+          $("#numberOfMisses").text(numberOfMisses);
+          winOrLose(numberOfSunkShips, numberOfMisses);
+          console.log("numberOfMisses", numberOfMisses);
+      }
+    });
   }
-  console.log("ships", ships);
 
-  $("td").click(function() {
-    if ($(this).attr("class")) {
-      var clickedShipNumber = $(this).attr("class");
-      clickedShipNumber = clickedShipNumber.replace(/\D/g,'');
-      ships[clickedShipNumber].numberOfHits++;
 
-      checkShipSunk(clickedShipNumber);
-    } else {
-      numberOfMisses++;
-      winOrLose(numberOfSunkShips, numberOfMisses);
-      console.log("numberOfMisses", numberOfMisses);
-
-    }
-
-    // remove event listener from table cell if clicked
-    $(this).off();
-
-    if (takenSpots.includes($(this).attr("id"))) {
-      $(this).addClass('spaceWasHit');
-      console.log("Hit!");
-
-    } else {
-      console.log("Missed!");
-      $(this).addClass('spaceWasMiss');
-    }
-  });
 
   function checkShipSunk(shipNumber) {
     console.log(`numberOfHits ship${shipNumber}: ${ships[shipNumber].numberOfHits}`);
     if (ships[shipNumber].numberOfHits === ships[shipNumber].shipLength) {
-      alert("sunk");
-      numberOfSunkShips++;
+      alert(ships[shipNumber].name+ " sunk!");
+
+
       winOrLose(numberOfSunkShips);
+      numberOfSunkShips++;
+      $("#numberOfShipsSunk").text(numberOfSunkShips);
     }
   }
 
@@ -188,9 +196,32 @@ window.onload = function() {
     if(numberOfSunkShips === ships.length) {
       alert("You Win!");
     }
-    if(numberOfMisses > 10) {
+    if(numberOfMisses > 5) {
       alert("You Lose!");
+      resetBoard();
     }
   }
 
+  function resetBoard() {
+    // $('table').children().removeClass();
+    $('tr').children().removeClass();
+    takenSpots = [];
+    console.log($('tr').children());
+    for(var i=0; i < ships.length; i++) {
+      ships[i].locations = [];
+      ships[i].numberOfHits = 0;
+    }
+    for (var x = 0; x < ships.length; x++) {
+      generateShipPositionParameters(x);
+    }
+    $('tr').children().off();
+    eventListenerAdd();
+
+    numberOfSunkShips = 0;
+    numberOfMisses = 0;
+    $("#numberOfMisses").text(numberOfMisses);
+    console.log($('tr').children());
+  }
+
+  eventListenerAdd();
 }
