@@ -184,7 +184,7 @@ window.onload = function() {
     console.log(`numberOfHits ship${shipNumber}: ${ships[shipNumber].numberOfHits}`);
     if (ships[shipNumber].numberOfHits === ships[shipNumber].shipLength) {
       alert(ships[shipNumber].name+ " sunk!");
-
+      $("#ship-" + shipNumber + "-sunk").show();
 
       winOrLose(numberOfSunkShips);
       numberOfSunkShips++;
@@ -216,10 +216,13 @@ window.onload = function() {
     }
     $('tr').children().off();
     eventListenerAdd();
-
+    $("#ship-0-sunk").hide();
+    $("#ship-1-sunk").hide();
+    $("#ship-2-sunk").hide();
     numberOfSunkShips = 0;
     numberOfMisses = 0;
     $("#numberOfMisses").text(numberOfMisses);
+    $("#numberOfShipsSunk").text(numberOfSunkShips);
     console.log($('tr').children());
   }
 

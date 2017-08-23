@@ -35,6 +35,7 @@ td {
 td:hover {
   /*background-color:#264027;*/
   background-color: white;
+  cursor:pointer;
 }
 
 .ship {
@@ -73,6 +74,7 @@ footer p {
 .container {
   width:30%;
   text-align:center;
+  margin:0 auto;
 }
 
 .ship-wrapper {
@@ -89,14 +91,16 @@ footer p {
 }
 
 .explosion {
+  display:none;
   position:absolute;
-  top:10px;
+  top:8px;
   z-index:2;
   left:15px;
   width:8em;
 }
 
 .ship-names {
+  font-family:"Open Sans Condensed", sans-serif;
   font-size:1.5em;
   text-align:left;
   width:6.5em;
