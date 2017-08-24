@@ -43,11 +43,26 @@ td {
     transition:.5s all;
 }
 
-td:hover {
-  /*background-color:#264027;*/
-  background-color: white;
+td.hoverclass{
+  background-position: 50% 50%;
+  background-image: url('../images/crosshair.png');
+  background-size: cover;
+  background-repeat:no-repeat;
+  animation: pulse .5s linear infinite;
   cursor:pointer;
 }
+
+@keyframes pulse {
+  0% {background-size: 100% 100%; background-position: 0 0 0 0;}
+  50% {background-size: 110% 110%;background-position: 0 -4px -4px 0;}
+  100% {background-size: 100% 100%;background-position: 0 0 0 0;}
+}
+
+/*td:hover {
+  background-color:#264027;
+  background-color: white;
+  cursor:pointer;
+}*/
 
 .ship {
   /*background-color:black;*/

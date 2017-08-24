@@ -153,7 +153,7 @@ window.onload = function() {
     $("td").click(function() {
       // remove event listener from table cell if clicked
       $(this).off();
-
+      $(this).removeClass('hoverclass');
       if (takenSpots.includes($(this).attr("id"))) {
         $(this).addClass('spaceWasHit');
         console.log("Hit!");
@@ -234,6 +234,19 @@ window.onload = function() {
     $("#numberOfShipsSunk").text(numberOfSunkShips);
     console.log($('tr').children());
   }
+
+  $('td').mouseover(function() {
+    $(this).addClass('hoverclass');
+    // $(this).addClass('hoverclass');
+    // console.log($(this));
+  })
+  $('td').mouseout(function() {
+    $(this).removeClass('hoverclass');
+    // $(this).addClass('hoverclass');
+    // console.log($(this));
+  })
+
+
 
   eventListenerAdd();
 }
