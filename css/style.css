@@ -48,7 +48,7 @@ td.hoverclass{
   background-image: url('../images/crosshair.png');
   background-size: cover;
   background-repeat:no-repeat;
-  animation: pulse .5s linear infinite;
+  animation: pulse .5s ease-in-out infinite;
   cursor:pointer;
 }
 
@@ -139,6 +139,7 @@ footer p {
   display:flex;
   justify-content:center;
   align-items:center;
+  margin: 2em 0;
 }
 
 .color-explanations-square {
