@@ -176,6 +176,13 @@ window.onload = function() {
           console.log("numberOfMisses", numberOfMisses);
       }
     });
+
+    $('td').mouseover(function() {
+      $(this).addClass('hoverclass');
+    })
+    $('td').mouseout(function() {
+      $(this).removeClass('hoverclass');
+    })
   }
 
 
@@ -192,8 +199,8 @@ window.onload = function() {
       // alert(ships[shipNumber].name+ " sunk!");
       $("#ship-" + shipNumber + "-sunk").attr("src", "images/battleship-sunk.png").fadeIn('slow');
       // .next().delay(500).fadeOut('slow')
-      winOrLose(numberOfSunkShips);
       numberOfSunkShips++;
+      winOrLose(numberOfSunkShips);
       $("#numberOfShipsSunk").text(numberOfSunkShips);
     }
   }
@@ -204,7 +211,7 @@ window.onload = function() {
       swal("You Won!", "", "success");
       resetBoard();
     }
-    if(numberOfMisses > 10) {
+    if(numberOfMisses > 9) {
       sweetAlert("You Lose!", "", "error");
       // alert("You Lose!");
       resetBoard();
@@ -235,16 +242,7 @@ window.onload = function() {
     console.log($('tr').children());
   }
 
-  $('td').mouseover(function() {
-    $(this).addClass('hoverclass');
-    // $(this).addClass('hoverclass');
-    // console.log($(this));
-  })
-  $('td').mouseout(function() {
-    $(this).removeClass('hoverclass');
-    // $(this).addClass('hoverclass');
-    // console.log($(this));
-  })
+
 
 
 
