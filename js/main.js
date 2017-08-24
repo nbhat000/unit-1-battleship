@@ -155,12 +155,14 @@ window.onload = function() {
       $(this).off();
       $(this).removeClass('hoverclass');
       if (takenSpots.includes($(this).attr("id"))) {
+        new Audio("audio/gun_sound.wav").play();
         $(this).addClass('spaceWasHit');
-        console.log("Hit!");
+        // console.log("Hit!");
 
       } else {
-        console.log("Missed!");
+        // console.log("Missed!");
         $(this).addClass('spaceWasMiss');
+        new Audio("audio/splash_sound.wav").play();
       }
 
       if ($(this).hasClass("ship")) {
@@ -173,7 +175,7 @@ window.onload = function() {
           numberOfMisses++;
           $("#numberOfMisses").text(numberOfMisses);
           winOrLose(numberOfSunkShips, numberOfMisses);
-          console.log("numberOfMisses", numberOfMisses);
+          // console.log("numberOfMisses", numberOfMisses);
       }
     });
 
@@ -244,7 +246,9 @@ window.onload = function() {
 
 
 
-
+  $('#reset-button').on('click',function() {
+    resetBoard()
+  });
 
   eventListenerAdd();
 }

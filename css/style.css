@@ -157,3 +157,23 @@ footer p {
   text-transform:uppercase;
   letter-spacing:1px;
 }
+
+.key-colors {
+  font-family:"Open Sans Condensed", sans-serif;
+  font-size:1.5em;
+}
+
+#reset-button {
+  background-color:transparent;
+  border: 2px solid #051923;
+  padding:10px;
+  border-radius:5px;
+  transition:.5s all;
+  font-family: "Open Sans Condensed", sans-serif;
+  font-size:1.25em;
+}
+
+#reset-button:hover {
+  color:white;
+  background-color:black;
+}
