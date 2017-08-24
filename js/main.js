@@ -184,7 +184,11 @@ window.onload = function() {
     console.log(`numberOfHits ship${shipNumber}: ${ships[shipNumber].numberOfHits}`);
     if (ships[shipNumber].numberOfHits === ships[shipNumber].shipLength) {
       new Audio("audio/explosion_sound.mp3").play();
-      sweetAlert(ships[shipNumber].name+ " sunk!", "", "error");
+      swal({
+        title: ships[shipNumber].name+ " sunk!",
+        text: "",
+        imageUrl: "sweetalert-master/example/images/thumbs-up.jpg"
+      });
       // alert(ships[shipNumber].name+ " sunk!");
       $("#ship-" + shipNumber + "-sunk").attr("src", "images/battleship-sunk.png").fadeIn('slow');
       // .next().delay(500).fadeOut('slow')
@@ -196,11 +200,13 @@ window.onload = function() {
 
   function winOrLose(numberOfSunkShips, numberOfMisses) {
     if(numberOfSunkShips === ships.length) {
-      alert("You Win!");
+      // alert("You Win!");
+      swal("You Won!", "", "success");
       resetBoard();
     }
     if(numberOfMisses > 10) {
-      alert("You Lose!");
+      sweetAlert("You Lose!", "", "error");
+      // alert("You Lose!");
       resetBoard();
     }
   }
