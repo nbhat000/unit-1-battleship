@@ -183,9 +183,11 @@ window.onload = function() {
   function checkShipSunk(shipNumber) {
     console.log(`numberOfHits ship${shipNumber}: ${ships[shipNumber].numberOfHits}`);
     if (ships[shipNumber].numberOfHits === ships[shipNumber].shipLength) {
-      alert(ships[shipNumber].name+ " sunk!");
-      $("#ship-" + shipNumber + "-sunk").show();
-
+      new Audio("audio/explosion_sound.mp3").play();
+      sweetAlert(ships[shipNumber].name+ " sunk!", "", "error");
+      // alert(ships[shipNumber].name+ " sunk!");
+      $("#ship-" + shipNumber + "-sunk").attr("src", "images/battleship-sunk.png").fadeIn('slow');
+      // .next().delay(500).fadeOut('slow')
       winOrLose(numberOfSunkShips);
       numberOfSunkShips++;
       $("#numberOfShipsSunk").text(numberOfSunkShips);
@@ -195,8 +197,9 @@ window.onload = function() {
   function winOrLose(numberOfSunkShips, numberOfMisses) {
     if(numberOfSunkShips === ships.length) {
       alert("You Win!");
+      resetBoard();
     }
-    if(numberOfMisses > 5) {
+    if(numberOfMisses > 10) {
       alert("You Lose!");
       resetBoard();
     }
@@ -216,9 +219,9 @@ window.onload = function() {
     }
     $('tr').children().off();
     eventListenerAdd();
-    $("#ship-0-sunk").hide();
-    $("#ship-1-sunk").hide();
-    $("#ship-2-sunk").hide();
+    $("#ship-0-sunk").attr("src","images/battleship.png");
+    $("#ship-1-sunk").attr("src","images/frigate.png");
+    $("#ship-2-sunk").attr("src","images/minesweeper.png");
     numberOfSunkShips = 0;
     numberOfMisses = 0;
     $("#numberOfMisses").text(numberOfMisses);

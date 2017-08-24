@@ -4,116 +4,125 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="sweetalert-master/dist/sweetalert.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Anton|Open+Sans+Condensed:300" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" type"text/css">
+  <script src="sweetalert-master/dist/sweetalert.min.js" type="text/javascript"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="js/main.js" type="text/javascript"></script>
   <title>Battleship</title>
 </head>
+
 <body>
-  <h1>Battleship</h1>
-  <h2>Number of Misses: <span id="numberOfMisses">0</span></h2>
-  <h2>Number of Ships Sunk: <span id="numberOfShipsSunk">0</span></h2>
-  <table>
-    <tbody>
-      <tr>
-        <td id="00"></td>
-        <td id="01"></td>
-        <td id="02"></td>
-        <td id="03"></td>
-        <td id="04"></td>
-        <td id="05"></td>
-        <td id="06"></td>
-      </tr>
-      <tr>
-        <td id="10"></td>
-        <td id="11"></td>
-        <td id="12"></td>
-        <td id="13"></td>
-        <td id="14"></td>
-        <td id="15"></td>
-        <td id="16"</td>
-      </tr>
-      <tr>
-        <td id="20"></td>
-        <td id="21"></td>
-        <td id="22"></td>
-        <td id="23"></td>
-        <td id="24"></td>
-        <td id="25"></td>
-        <td id="26"></td>
-      </tr>
-      <tr>
-        <td id="30"></td>
-        <td id="31"></td>
-        <td id="32"></td>
-        <td id="33"></td>
-        <td id="34"></td>
-        <td id="35"></td>
-        <td id="36"></td>
-      </tr>
-      <tr>
-        <td id="40"></td>
-        <td id="41"></td>
-        <td id="42"></td>
-        <td id="43"></td>
-        <td id="44"></td>
-        <td id="45"></td>
-        <td id="46"></td>
-      </tr>
-      <tr>
-        <td id="50"></td>
-        <td id="51"></td>
-        <td id="52"></td>
-        <td id="53"></td>
-        <td id="54"></td>
-        <td id="55"></td>
-        <td id="56"></td>
-      </tr>
-      <tr>
-        <td id="60"></td>
-        <td id="61"></td>
-        <td id="62"></td>
-        <td id="63"></td>
-        <td id="64"></td>
-        <td id="65"></td>
-        <td id="66"></td>
-      </tr>
-    </tbody>
-  </table>
   <div class="container">
-    <div class="row" id="battleship">
-      <div class="col-md-6 ship-wrapper">
-        <img class="ship-icons" src="images/battleship.png">
-        <img class="explosion"  id="ship-0-sunk" src="images/explosion.png">
+    <h1>Battleship</h1>
+    <h2>Number of Misses: <span id="numberOfMisses">0</span></h2>
+    <h2>Number of Ships Sunk: <span id="numberOfShipsSunk">0</span></h2>
+      <div class="col-md-6 col-xs-12">
+        <table>
+          <tbody>
+            <tr>
+              <td id="00"></td>
+              <td id="01"></td>
+              <td id="02"></td>
+              <td id="03"></td>
+              <td id="04"></td>
+              <td id="05"></td>
+              <td id="06"></td>
+            </tr>
+            <tr>
+              <td id="10"></td>
+              <td id="11"></td>
+              <td id="12"></td>
+              <td id="13"></td>
+              <td id="14"></td>
+              <td id="15"></td>
+              <td id="16"</td>
+            </tr>
+            <tr>
+              <td id="20"></td>
+              <td id="21"></td>
+              <td id="22"></td>
+              <td id="23"></td>
+              <td id="24"></td>
+              <td id="25"></td>
+              <td id="26"></td>
+            </tr>
+            <tr>
+              <td id="30"></td>
+              <td id="31"></td>
+              <td id="32"></td>
+              <td id="33"></td>
+              <td id="34"></td>
+              <td id="35"></td>
+              <td id="36"></td>
+            </tr>
+            <tr>
+              <td id="40"></td>
+              <td id="41"></td>
+              <td id="42"></td>
+              <td id="43"></td>
+              <td id="44"></td>
+              <td id="45"></td>
+              <td id="46"></td>
+            </tr>
+            <tr>
+              <td id="50"></td>
+              <td id="51"></td>
+              <td id="52"></td>
+              <td id="53"></td>
+              <td id="54"></td>
+              <td id="55"></td>
+              <td id="56"></td>
+            </tr>
+            <tr>
+              <td id="60"></td>
+              <td id="61"></td>
+              <td id="62"></td>
+              <td id="63"></td>
+              <td id="64"></td>
+              <td id="65"></td>
+              <td id="66"></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="col-md-6">
-        <p class="ship-names">Battleship</p>
+      <div class="col-md-6 col-xs-12">
+        <h3>Ships:</h3>
+        <div class="row" id="battleship">
+          <div class="col-md-6 ship-wrapper">
+            <img class="ship-icons" id="ship-0-sunk" src="images/battleship.png">
+            <!-- <img class="explosion"  id="ship-0-sunk" src="images/explosion.png"> -->
+          </div>
+          <div class="col-md-6">
+            <p class="ship-names">Battleship</p>
+          </div>
+        </div>
+        <div class="row" id="frigate">
+          <div class="col-md-6">
+            <img class="ship-icons" id="ship-1-sunk" src="images/frigate.png">
+            <!-- <img class="explosion" id="ship-1-sunk" src="images/explosion.png"> -->
+          </div>
+          <div class="col-md-6">
+            <p class="ship-names">Frigate</p>
+          </div>
+        </div>
+        <div class="row" id="minesweeper">
+          <div class="col-md-6">
+            <img class="ship-icons" id="ship-2-sunk" src="images/minesweeper.png">
+            <!-- <img class="explosion" id="ship-2-sunk" src="images/explosion.png"> -->
+          </div>
+          <div class="col-md-6">
+            <p class="ship-names">Minesweeper</p>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="row" id="frigate">
-      <div class="col-md-6">
-        <img class="ship-icons" src="images/frigate.png">
-        <img class="explosion" id="ship-1-sunk" src="images/explosion.png">
-      </div>
-      <div class="col-md-6">
-        <p class="ship-names">Frigate</p>
-      </div>
-    </div>
-    <div class="row" id="minesweeper">
-      <div class="col-md-6">
-        <img class="ship-icons" src="images/minesweeper.png">
-        <img class="explosion" id="ship-2-sunk" src="images/explosion.png">
-      </div>
-      <div class="col-md-6">
-        <p class="ship-names">Minesweeper</p>
-      </div>
-    </div>
   </div>
   <footer>
     <p>Ship by Robert A. Di Ieso from the Noun Project</p>
     <p>Ship by Olivier Guin from the Noun Project</p>
     <p>Battleship by Luke Anthony Firth from the Noun Project</p>
+    <p>Coded by Nikhil Bhat - 2017</p>
   </footer>
 </body>
 
