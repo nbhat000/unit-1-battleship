@@ -1,9 +1,8 @@
 # Battleship
 
 <p align="center">
-  <img src="https://github.com/nbhat000/unit-1-battleship/blob/master/images/battleship-title.jpg "Battleship Title">
+  <img src="https://github.com/nbhat000/unit-1-battleship/blob/master/images/battleship-title.jpg">
 </p>
-![alt text](https://github.com/nbhat000/unit-1-battleship/blob/master/images/battleship-title.jpg "Battleship Title")
 
 ## Rules of the Game
 Battleship is a tactical strategy game. This version is 1-player. The objective of the game is to find your enemy's ships and blow them up before a maximum number of misses is reached. The ships are placed and hidden before the round begins, and then the player has 10 tries to reveal their positions. A square turning dark blue signifies a miss, and a square turning dark red signifies a hit. 
@@ -13,7 +12,9 @@ I started off coding the logic. The game board was comprised of a 7x7 table, whe
 
 ## Wireframes
 
-![alt text](https://github.com/nbhat000/unit-1-battleship/blob/master/wireframes/Battleship%20Wireframe%201.png "Wireframe")
+<p align="center">
+  <img src="https://github.com/nbhat000/unit-1-battleship/blob/master/wireframes/Battleship%20Wireframe%201.png">
+</p>
 
 ## Technologies Used
 - jQuery
