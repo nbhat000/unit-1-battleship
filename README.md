@@ -24,3 +24,6 @@ I started off coding the logic. The game board was comprised of a 7x7 table, whe
 - Intelligent AI to play against
 - Status bars for each ship to see how many more locations they have to hit on each ship
 - Background music and intro video
+
+# Trello Board
+- https://trello.com/b/wR4MJ8ZW/battleship
