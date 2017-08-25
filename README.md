@@ -1,5 +1,8 @@
 # Battleship
 
+<p align="center">
+  <img src="https://github.com/nbhat000/unit-1-battleship/blob/master/images/battleship-title.jpg "Battleship Title">
+</p>
 ![alt text](https://github.com/nbhat000/unit-1-battleship/blob/master/images/battleship-title.jpg "Battleship Title")
 
 ## Rules of the Game
